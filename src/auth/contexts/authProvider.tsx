@@ -15,7 +15,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const login = async (email: string, password: string) => {
     try {
-      //executar aqui o post para a API
+      //executar aqui o post para a API para o login
       if (email === 'admin@mail.com' && password === 'admin') {
         const token = 'tokenJWT';
         localStorage.setItem('token', token);

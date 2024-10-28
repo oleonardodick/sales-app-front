@@ -48,6 +48,7 @@ function Login() {
               <Label htmlFor="password">Senha</Label>
               <Input
                 id="password"
+                type="password"
                 placeholder="Informe sua senha"
                 onChange={(e) => setSenha(e.target.value)}
               />
