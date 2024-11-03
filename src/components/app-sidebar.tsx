@@ -1,4 +1,13 @@
-import { Calendar, Home, Inbox, Menu, Search, Settings, X } from 'lucide-react';
+import {
+  Calendar,
+  ChevronRight,
+  Home,
+  Inbox,
+  Menu,
+  Search,
+  Settings,
+  X,
+} from 'lucide-react';
 import {
   Sidebar,
   SidebarButton,
@@ -19,11 +28,10 @@ import { Link } from 'react-router-dom';
 import { useSidebar } from '@/contexts/siderbar-context';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from './ui/accordion';
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from './ui/collapsible';
 
 const items = [
   {
@@ -93,38 +101,42 @@ export function AppSidebar() {
         {items.map((item) => (
           <SidebarItem key={item.title}>
             {item.subitem ? (
-              <Accordion type="single" collapsible>
-                <AccordionItem value={item.title} className="border-none">
-                  <AccordionTrigger className="text-md font-normal hover:no-underline py-0">
-                    <SidebarButton tooltip={item.title}>
-                      <item.icon />
-                      <SidebarMenuText>{item.title}</SidebarMenuText>
-                    </SidebarButton>
-                  </AccordionTrigger>
-                  <AccordionContent className="text-md">
-                    <SidebarSubMenu>
-                      {!open && (
-                        <>
-                          <SidebarSubTitle>{item.title}</SidebarSubTitle>
-                          <Separator />
-                        </>
-                      )}
-                      {item.subitem.map((subitem) => (
-                        <SidebarSubMenuItem key={subitem.title}>
-                          <SidebarButton>
-                            <subitem.icon />
-                            <Link to={subitem.url}>
-                              <SidebarSubMenuText>
-                                {subitem.title}
-                              </SidebarSubMenuText>
-                            </Link>
-                          </SidebarButton>
-                        </SidebarSubMenuItem>
-                      ))}
-                    </SidebarSubMenu>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+              <Collapsible className={`${open ? '' : 'flex flex-row'}`}>
+                <CollapsibleTrigger asChild>
+                  <SidebarButton
+                    tooltip={item.title}
+                    className="[&[data-state=open]>p>svg]:rotate-90"
+                  >
+                    <item.icon />
+                    <SidebarMenuText>
+                      {item.title}
+                      <ChevronRight className="transition-transform duration-200" />
+                    </SidebarMenuText>
+                  </SidebarButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarSubMenu>
+                    {!open && (
+                      <>
+                        <SidebarSubTitle>{item.title}</SidebarSubTitle>
+                        <Separator />
+                      </>
+                    )}
+                    {item.subitem.map((subitem) => (
+                      <SidebarSubMenuItem key={subitem.title}>
+                        <SidebarButton>
+                          <subitem.icon />
+                          <Link to={subitem.url}>
+                            <SidebarSubMenuText>
+                              {subitem.title}
+                            </SidebarSubMenuText>
+                          </Link>
+                        </SidebarButton>
+                      </SidebarSubMenuItem>
+                    ))}
+                  </SidebarSubMenu>
+                </CollapsibleContent>
+              </Collapsible>
             ) : (
               <SidebarButton tooltip={item.title}>
                 <item.icon />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSidebar } from '@/contexts/siderbar-context';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
+import { cn } from '@/lib/utils';
 
 const Sidebar = React.forwardRef<
   HTMLDivElement,
@@ -56,12 +57,15 @@ const SidebarButton = React.forwardRef<
   React.ComponentProps<'button'> & {
     tooltip?: string | React.ComponentProps<typeof TooltipContent>;
   }
->(({ tooltip, ...props }, ref) => {
+>(({ tooltip, className, ...props }, ref) => {
   const { open } = useSidebar();
   const button = (
     <button
       ref={ref}
-      className="flex flex-row w-full gap-2 pl-1 py-3 rounded-xl hover:border border-zinc-300"
+      className={cn(
+        'flex flex-row w-full gap-2 pl-1 py-3 rounded-xl hover:border border-zinc-300',
+        className
+      )}
       {...props}
     />
   );
@@ -99,7 +103,7 @@ const SidebarMenuText = React.forwardRef<
   return (
     <p
       ref={ref}
-      className={`justify-between text-left ${open ? 'flex' : 'hidden'}`}
+      className={`justify-between w-full text-left ${open ? 'flex' : 'hidden'}`}
       {...props}
     />
   );
