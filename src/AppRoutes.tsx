@@ -38,7 +38,7 @@ const AppRoutes: React.FC = () => {
   return (
     <Routes>
       {routes.map((route) => {
-        if (route.type === 'protected') {
+        if (route.type === RouteType.PROTECTED) {
           return (
             <Route
               key={route.path}

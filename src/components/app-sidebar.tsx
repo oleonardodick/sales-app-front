@@ -1,34 +1,29 @@
-import {
-  Calendar,
-  ChevronRight,
-  Home,
-  Inbox,
-  Menu,
-  Search,
-  Settings,
-  X,
-} from 'lucide-react';
+import { Calendar, Home, Inbox, Menu, Search, Settings, X } from 'lucide-react';
 import {
   Sidebar,
+  SidebarButton,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarItem,
   SidebarMenuText,
   SidebarSubMenu,
   SidebarSubMenuItem,
+  SidebarSubMenuText,
+  SidebarSubTitle,
   SidebarTitle,
 } from './sidebar';
 import { Separator } from './ui/separator';
 import { Button } from './ui/button';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from './ui/collapsible';
 import { Link } from 'react-router-dom';
 import { useSidebar } from '@/contexts/siderbar-context';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from './ui/accordion';
 
 const items = [
   {
@@ -79,6 +74,7 @@ const items = [
 
 export function AppSidebar() {
   const { open, toggleSidebar } = useSidebar();
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -94,48 +90,60 @@ export function AppSidebar() {
       </SidebarHeader>
       <Separator />
       <SidebarContent>
-        <SidebarMenu>
-          {items.map((item) => (
-            <Collapsible key={item.title}>
-              <SidebarMenuItem key={item.title}>
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title}>
-                    <item.icon />
-                    {item.subitem ? (
-                      <SidebarMenuText>
-                        {item.title}
-                        <ChevronRight />
-                      </SidebarMenuText>
-                    ) : (
-                      <Link to={item.url}>
-                        <SidebarMenuText>{item.title}</SidebarMenuText>
-                      </Link>
-                    )}
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-                {item.subitem && (
-                  <CollapsibleContent>
+        {items.map((item) => (
+          <SidebarItem key={item.title}>
+            {item.subitem ? (
+              <Accordion type="single" collapsible>
+                <AccordionItem value={item.title} className="border-none">
+                  <AccordionTrigger className="text-md font-normal hover:no-underline py-0">
+                    <SidebarButton tooltip={item.title}>
+                      <item.icon />
+                      <SidebarMenuText>{item.title}</SidebarMenuText>
+                    </SidebarButton>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-md">
                     <SidebarSubMenu>
+                      {!open && (
+                        <>
+                          <SidebarSubTitle>{item.title}</SidebarSubTitle>
+                          <Separator />
+                        </>
+                      )}
                       {item.subitem.map((subitem) => (
-                        <SidebarSubMenuItem
-                          key={item.title + '_' + subitem.title}
-                        >
-                          <SidebarMenuButton>
+                        <SidebarSubMenuItem key={subitem.title}>
+                          <SidebarButton>
                             <subitem.icon />
                             <Link to={subitem.url}>
-                              <span>{subitem.title}</span>
+                              <SidebarSubMenuText>
+                                {subitem.title}
+                              </SidebarSubMenuText>
                             </Link>
-                          </SidebarMenuButton>
+                          </SidebarButton>
                         </SidebarSubMenuItem>
                       ))}
                     </SidebarSubMenu>
-                  </CollapsibleContent>
-                )}
-              </SidebarMenuItem>
-            </Collapsible>
-          ))}
-        </SidebarMenu>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ) : (
+              <SidebarButton tooltip={item.title}>
+                <item.icon />
+                <Link to={item.url}>
+                  <SidebarMenuText>{item.title}</SidebarMenuText>
+                </Link>
+              </SidebarButton>
+            )}
+          </SidebarItem>
+        ))}
       </SidebarContent>
+      <Separator />
+      <SidebarFooter>
+        <Avatar className="rounded-xl">
+          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarFallback>Usuario</AvatarFallback>
+        </Avatar>
+        {open && <span>Usuario</span>}
+      </SidebarFooter>
     </Sidebar>
   );
 }
