@@ -1,13 +1,4 @@
-import {
-  Calendar,
-  ChevronRight,
-  Home,
-  Inbox,
-  Menu,
-  Search,
-  Settings,
-  X,
-} from 'lucide-react';
+import { ChevronRight, Menu, X } from 'lucide-react';
 import {
   Sidebar,
   SidebarButton,
@@ -21,66 +12,20 @@ import {
   SidebarSubMenuText,
   SidebarSubTitle,
   SidebarTitle,
-} from './sidebar';
-import { Separator } from './ui/separator';
-import { Button } from './ui/button';
+} from '../ui/sidebar';
+import { Separator } from '../ui/separator';
+import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
 import { useSidebar } from '@/contexts/siderbar-context';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from './ui/collapsible';
+} from '../ui/collapsible';
+import IRoutes from '@/interfaces/IRoutes';
 
-const items = [
-  {
-    title: 'Home',
-    url: '/',
-    icon: Home,
-  },
-  {
-    title: 'Inbox',
-    url: '#',
-    icon: Inbox,
-    subitem: [
-      {
-        title: 'Teste',
-        url: '/inbox/teste',
-        icon: Inbox,
-      },
-      {
-        title: 'Teste 2',
-        url: '/inbox/teste',
-        icon: Inbox,
-      },
-    ],
-  },
-  {
-    title: 'Calendar',
-    url: '/calendar',
-    icon: Calendar,
-  },
-  {
-    title: 'Search',
-    url: '/search',
-    icon: Search,
-  },
-  {
-    title: 'Settings',
-    url: '#',
-    icon: Settings,
-    subitem: [
-      {
-        title: 'Teste',
-        url: '#',
-        icon: Settings,
-      },
-    ],
-  },
-];
-
-export function AppSidebar() {
+export function AppSidebar({ items }: { items: IRoutes[] }) {
   const { open, toggleSidebar } = useSidebar();
 
   return (
@@ -100,14 +45,14 @@ export function AppSidebar() {
       <SidebarContent>
         {items.map((item) => (
           <SidebarItem key={item.title}>
-            {item.subitem ? (
+            {item.subRoute ? (
               <Collapsible className={`${open ? '' : 'flex flex-row'}`}>
                 <CollapsibleTrigger asChild>
                   <SidebarButton
                     tooltip={item.title}
                     className="[&[data-state=open]>p>svg]:rotate-90"
                   >
-                    <item.icon />
+                    {item.icon && <item.icon />}
                     <SidebarMenuText>
                       {item.title}
                       <ChevronRight className="transition-transform duration-200" />
@@ -122,13 +67,13 @@ export function AppSidebar() {
                         <Separator />
                       </>
                     )}
-                    {item.subitem.map((subitem) => (
-                      <SidebarSubMenuItem key={subitem.title}>
+                    {item.subRoute.map((subRoute) => (
+                      <SidebarSubMenuItem key={subRoute.title}>
                         <SidebarButton>
-                          <subitem.icon />
-                          <Link to={subitem.url}>
+                          <subRoute.icon />
+                          <Link to={subRoute.url}>
                             <SidebarSubMenuText>
-                              {subitem.title}
+                              {subRoute.title}
                             </SidebarSubMenuText>
                           </Link>
                         </SidebarButton>
@@ -139,7 +84,7 @@ export function AppSidebar() {
               </Collapsible>
             ) : (
               <SidebarButton tooltip={item.title}>
-                <item.icon />
+                {item.icon && <item.icon />}
                 <Link to={item.url}>
                   <SidebarMenuText>{item.title}</SidebarMenuText>
                 </Link>

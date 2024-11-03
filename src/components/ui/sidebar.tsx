@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSidebar } from '@/contexts/siderbar-context';
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { cn } from '@/lib/utils';
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 
 const Sidebar = React.forwardRef<
   HTMLDivElement,
