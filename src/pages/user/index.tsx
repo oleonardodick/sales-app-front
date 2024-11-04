@@ -24,6 +24,7 @@ import {
   SearchIcon,
   XCircleIcon,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const lista = [
   { nome: 'Leonardo', email: 'leonardo1@mail.com', idade: 29, sexo: 'M' },
@@ -42,8 +43,10 @@ function Users() {
   return (
     <div className="flex flex-col gap-2">
       <div className="text-end">
-        <Button variant="outline" className="rounded-xl py-6 text-lg">
-          <CirclePlusIcon /> Cadastrar
+        <Button variant="outline" className="rounded-xl py-6 text-lg" asChild>
+          <Link to={'/usuarios/cadastrar'}>
+            <CirclePlusIcon /> Cadastrar
+          </Link>
         </Button>
       </div>
       <div className="flex justify-center">
@@ -68,7 +71,7 @@ function Users() {
         </AppTableHeader>
         <AppTableBody>
           {lista.map((usuario) => (
-            <AppTableRow>
+            <AppTableRow key={usuario.email}>
               <AppTableCell>{usuario.nome}</AppTableCell>
               <AppTableCell>{usuario.email}</AppTableCell>
               <AppTableCell>{usuario.idade}</AppTableCell>

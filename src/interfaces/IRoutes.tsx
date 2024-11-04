@@ -4,6 +4,7 @@ import { ReactElement } from 'react';
 export default interface IRoutes {
   title: string;
   url: string;
+  exibirSidebar?: boolean;
   icon?: LucideIcon;
   element?: ReactElement;
   subRoute?: ISubRoute[];

@@ -1,16 +1,11 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Login from './pages/login';
 import Home from './pages/home';
-import { useAuth } from './auth/hooks/useAuth';
-import Layout from './components/app/layout';
 import { HomeIcon, UsersIcon } from 'lucide-react';
 import Users from './pages/user';
 import IRoutes from './interfaces/IRoutes';
-
-const ProtectedRoute = ({ element }: { element: React.ReactElement }) => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? element : <Navigate to="/login" />;
-};
+import CadastraUsuario from './pages/user/cadastrar';
+import { Layout } from './components/app/layout';
 
 const publicRoutes: IRoutes[] = [
   {
@@ -22,16 +17,23 @@ const publicRoutes: IRoutes[] = [
 
 const privateRoutes: IRoutes[] = [
   {
-    title: 'Home',
+    title: 'Dashboard',
     url: '/',
+    exibirSidebar: true,
     icon: HomeIcon,
     element: <Home />,
   },
   {
-    title: 'Users',
-    url: '/users',
+    title: 'Usuários',
+    url: '/usuarios',
+    exibirSidebar: true,
     icon: UsersIcon,
     element: <Users />,
+  },
+  {
+    title: 'Cadastrar Usuário',
+    url: '/usuarios/cadastrar',
+    element: <CadastraUsuario />,
   },
 ];
 
@@ -44,19 +46,13 @@ const AppRoutes: React.FC = () => {
         );
       })}
 
-      {privateRoutes.map((route) => {
-        return (
-          <Route
-            key={route.title}
-            path={route.url}
-            element={
-              <ProtectedRoute
-                element={<Layout items={privateRoutes}>{route.element}</Layout>}
-              />
-            }
-          />
-        );
-      })}
+      <Route element={<Layout items={privateRoutes} />}>
+        {privateRoutes.map((route) => {
+          return (
+            <Route key={route.title} path={route.url} element={route.element} />
+          );
+        })}
+      </Route>
     </Routes>
   );
 };
