@@ -39,7 +39,7 @@ const lista = [
   { nome: 'Beatriz', email: 'beatriz@mail.com', idade: 26, sexo: 'F' },
 ];
 
-function Users() {
+function Usuarios() {
   return (
     <div className="flex flex-col gap-2">
       <div className="text-end">
@@ -115,4 +115,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Usuarios;

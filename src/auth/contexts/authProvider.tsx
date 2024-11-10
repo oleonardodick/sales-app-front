@@ -7,11 +7,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
+    const carregaToken = async () => {
+      const token = await localStorage.getItem('token');
+      if (token && !isAuthenticated) {
+        setIsAuthenticated(true);
+      }
+    };
+
+    carregaToken();
+  }, [isAuthenticated]);
 
   const login = async (email: string, password: string) => {
     try {

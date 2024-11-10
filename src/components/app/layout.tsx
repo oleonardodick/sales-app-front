@@ -1,24 +1,17 @@
 import IRoutes from '@/interfaces/IRoutes';
 import { AppSidebar } from './sidebar';
 import { SidebarProvider } from '@/contexts/siderbar-context';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '@/auth/hooks/useAuth';
+import { Outlet } from 'react-router-dom';
 
 interface LayoutProps {
   items: IRoutes[];
 }
 
 export function Layout({ items }: LayoutProps) {
-  const { isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
   return (
     <SidebarProvider>
       <div className="flex flex-row h-screen">
-        <AppSidebar items={items} />
+        <AppSidebar items={items.filter((item) => item.exibirSidebar)} />
         <main className="p-3 w-full">
           <Outlet />
         </main>

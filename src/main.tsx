@@ -5,6 +5,8 @@ import { AuthProvider } from './auth/contexts/authProvider.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './Routes.tsx';
 
+console.log('Passou no main');
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>

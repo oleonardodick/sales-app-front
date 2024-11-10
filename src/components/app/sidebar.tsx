@@ -1,4 +1,4 @@
-import { ChevronRight, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import {
   Sidebar,
   SidebarButton,
@@ -7,27 +7,26 @@ import {
   SidebarHeader,
   SidebarItem,
   SidebarMenuText,
-  SidebarSubMenu,
-  SidebarSubMenuItem,
-  SidebarSubMenuText,
-  SidebarSubTitle,
+  // SidebarSubMenu,
+  // SidebarSubMenuItem,
+  // SidebarSubMenuText,
+  // SidebarSubTitle,
   SidebarTitle,
 } from '../ui/sidebar';
 import { Separator } from '../ui/separator';
 import { Button } from '../ui/button';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSidebar } from '@/contexts/siderbar-context';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '../ui/collapsible';
+// import {
+//   Collapsible,
+//   CollapsibleContent,
+//   CollapsibleTrigger,
+// } from '../ui/collapsible';
 import IRoutes from '@/interfaces/IRoutes';
 
 export function AppSidebar({ items }: { items: IRoutes[] }) {
   const { open, toggleSidebar } = useSidebar();
-  const location = useLocation();
 
   return (
     <Sidebar>
@@ -44,11 +43,9 @@ export function AppSidebar({ items }: { items: IRoutes[] }) {
       </SidebarHeader>
       <Separator />
       <SidebarContent>
-        {items.map(
-          (item) =>
-            item.exibirSidebar && (
-              <SidebarItem key={item.title}>
-                {item.subRoute ? (
+        {items.map((item) => (
+          <SidebarItem key={item.title}>
+            {/* {item.subRoute ? (
                   <Collapsible className={`${open ? '' : 'flex flex-row'}`}>
                     <CollapsibleTrigger asChild>
                       <SidebarButton
@@ -90,25 +87,21 @@ export function AppSidebar({ items }: { items: IRoutes[] }) {
                     </CollapsibleContent>
                   </Collapsible>
                 ) : (
-                  <SidebarButton
-                    tooltip={item.title}
-                    className={`${
-                      location.pathname === item.url
-                        ? // '/' + location.pathname.split('/')[1] === item.url
-                          // location.pathname === item.url
-                          'border border-black'
-                        : 'border-none'
-                    }`}
-                  >
+                  <SidebarButton tooltip={item.title}>
                     {item.icon && <item.icon />}
                     <Link to={item.url}>
                       <SidebarMenuText>{item.title}</SidebarMenuText>
                     </Link>
                   </SidebarButton>
-                )}
-              </SidebarItem>
-            )
-        )}
+                )} */}
+            <SidebarButton tooltip={item.title}>
+              {item.icon && <item.icon />}
+              <Link to={item.url}>
+                <SidebarMenuText>{item.title}</SidebarMenuText>
+              </Link>
+            </SidebarButton>
+          </SidebarItem>
+        ))}
       </SidebarContent>
       <Separator />
       <SidebarFooter>
