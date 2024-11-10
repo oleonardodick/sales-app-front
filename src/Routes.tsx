@@ -7,6 +7,7 @@ import CadastraUsuario from './pages/usuario/cadastrar';
 import Usuarios from './pages/usuario';
 import Dashboard from './pages/dashboard';
 import { useAuth } from './auth/hooks/useAuth';
+import ModificaUsuario from './pages/usuario/modificar';
 
 const publicRoutes: IRoutes[] = [
   {
@@ -36,9 +37,12 @@ const privateRoutes: IRoutes[] = [
     url: '/usuarios/cadastrar',
     element: <CadastraUsuario />,
   },
+  {
+    title: 'Modificar Usuário',
+    url: '/usuarios/modificar/:id',
+    element: <ModificaUsuario />,
+  },
 ];
-
-console.log('passou routes');
 
 const AppRoutes = () => {
   const { isAuthenticated } = useAuth();

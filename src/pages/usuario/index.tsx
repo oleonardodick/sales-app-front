@@ -18,28 +18,24 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import { UsuarioSchemaType } from '@/schemas/usuario';
 import {
   CirclePlusIcon,
   FilePenLineIcon,
   SearchIcon,
   XCircleIcon,
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-const lista = [
-  { nome: 'Leonardo', email: 'leonardo1@mail.com', idade: 29, sexo: 'M' },
-  { nome: 'Mariana', email: 'mariana@mail.com', idade: 25, sexo: 'F' },
-  { nome: 'Gabriel', email: 'gabriel@mail.com', idade: 32, sexo: 'M' },
-  { nome: 'Ana', email: 'ana@mail.com', idade: 27, sexo: 'F' },
-  { nome: 'Bruno', email: 'bruno@mail.com', idade: 30, sexo: 'M' },
-  { nome: 'Juliana', email: 'juliana@mail.com', idade: 24, sexo: 'F' },
-  { nome: 'Ricardo', email: 'ricardo@mail.com', idade: 28, sexo: 'M' },
-  { nome: 'Fernanda', email: 'fernanda@mail.com', idade: 31, sexo: 'F' },
-  { nome: 'Carlos', email: 'carlos@mail.com', idade: 33, sexo: 'M' },
-  { nome: 'Beatriz', email: 'beatriz@mail.com', idade: 26, sexo: 'F' },
-];
+import { dadosUsuarios } from './dadosUsuario';
 
 function Usuarios() {
+  const [usuarios, setUsuarios] = useState<UsuarioSchemaType[]>([]);
+
+  useEffect(() => {
+    setUsuarios(dadosUsuarios);
+  }, []);
+
   return (
     <div className="flex flex-col gap-2">
       <div className="text-end">
@@ -70,7 +66,7 @@ function Usuarios() {
           </AppTableRow>
         </AppTableHeader>
         <AppTableBody>
-          {lista.map((usuario) => (
+          {usuarios.map((usuario) => (
             <AppTableRow key={usuario.email}>
               <AppTableCell>{usuario.nome}</AppTableCell>
               <AppTableCell>{usuario.email}</AppTableCell>
@@ -78,10 +74,10 @@ function Usuarios() {
               <AppTableCell>
                 {usuario.sexo === 'M' ? 'Masculino' : 'Feminino'}
               </AppTableCell>
-              <AppTableCell>
+              <AppTableCell tooltip={'Editar'}>
                 <FilePenLineIcon />
               </AppTableCell>
-              <AppTableCell>
+              <AppTableCell tooltip={'Excluir'}>
                 <XCircleIcon />
               </AppTableCell>
             </AppTableRow>

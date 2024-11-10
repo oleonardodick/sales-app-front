@@ -8,6 +8,8 @@ import {
   TableRow as BaseTableRow,
   TableFooter as BaseTableFooter,
 } from '@/components/ui/table';
+import { TooltipContent } from '../ui/tooltip';
+import { Tooltip, TooltipTrigger } from '@radix-ui/react-tooltip';
 
 const AppTable = React.forwardRef<
   HTMLTableElement,
@@ -23,8 +25,29 @@ const AppTableBody = React.forwardRef<
 
 const AppTableCell = React.forwardRef<
   HTMLTableCellElement,
-  React.HTMLAttributes<HTMLTableCellElement>
->(({ ...props }, ref) => <BaseTableCell ref={ref} {...props} />);
+  React.HTMLAttributes<HTMLTableCellElement> & {
+    tooltip?: string | React.ComponentProps<typeof TooltipContent>;
+  }
+>(({ tooltip, ...props }, ref) => {
+  const tableCell = <BaseTableCell ref={ref} {...props} />;
+
+  if (!tooltip) {
+    return tableCell;
+  }
+
+  if (typeof tooltip === 'string') {
+    tooltip = {
+      children: tooltip,
+    };
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>{tableCell}</TooltipTrigger>
+      <TooltipContent align="center" className="rounded-full" {...tooltip} />
+    </Tooltip>
+  );
+});
 
 const AppTableHead = React.forwardRef<
   HTMLTableCellElement,
