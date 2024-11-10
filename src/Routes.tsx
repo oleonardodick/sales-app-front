@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Login from './pages/login';
-import { HomeIcon, UsersIcon } from 'lucide-react';
+import { ChartColumnIcon, UsersIcon } from 'lucide-react';
 import IRoutes from './interfaces/IRoutes';
 import { Layout } from './components/app/layout';
 import CadastraUsuario from './pages/usuario/cadastrar';
@@ -22,7 +22,7 @@ const privateRoutes: IRoutes[] = [
     title: 'Dashboard',
     url: '/dashboard',
     exibirSidebar: true,
-    icon: HomeIcon,
+    icon: ChartColumnIcon,
     element: <Dashboard />,
   },
   {

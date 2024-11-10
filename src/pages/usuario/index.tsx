@@ -75,7 +75,9 @@ function Usuarios() {
                 {usuario.sexo === 'M' ? 'Masculino' : 'Feminino'}
               </AppTableCell>
               <AppTableCell tooltip={'Editar'}>
-                <FilePenLineIcon />
+                <Link to={`/usuarios/modificar/${usuario.id}`}>
+                  <FilePenLineIcon />
+                </Link>
               </AppTableCell>
               <AppTableCell tooltip={'Excluir'}>
                 <XCircleIcon />

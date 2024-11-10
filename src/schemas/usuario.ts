@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const usuarioSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   nome: z.string().min(2, {
     message: 'O nome deve ter ao menos 2 caracteres.',
   }),

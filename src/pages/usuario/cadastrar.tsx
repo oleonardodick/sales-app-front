@@ -2,6 +2,7 @@ import FormUsuario from '@/components/app/forms/usuario';
 import { UsuarioSchemaType } from '@/schemas/usuario';
 
 const usuarioDefaultValues: UsuarioSchemaType = {
+  id: '',
   nome: '',
   email: '',
   idade: 0,

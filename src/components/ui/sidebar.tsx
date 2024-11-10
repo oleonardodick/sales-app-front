@@ -12,8 +12,8 @@ const Sidebar = React.forwardRef<
     <aside
       ref={ref}
       className={`flex flex-col h-full ${
-        open ? 'w-60' : 'w-16'
-      } border border-zinc-200 text-zinc-950 bg-white shadow-md  dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50`}
+        open ? 'w-64' : 'w-16'
+      }  text-gray-300 bg-zinc-800 shadow-md  dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50`}
       {...props}
     />
   );

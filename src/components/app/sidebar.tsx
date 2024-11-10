@@ -3,7 +3,6 @@ import {
   Sidebar,
   SidebarButton,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarItem,
   SidebarMenuText,
@@ -17,7 +16,6 @@ import { Separator } from '../ui/separator';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
 import { useSidebar } from '@/contexts/siderbar-context';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 // import {
 //   Collapsible,
 //   CollapsibleContent,
@@ -35,13 +33,13 @@ export function AppSidebar({ items }: { items: IRoutes[] }) {
         <Button
           size="icon"
           variant="link"
-          className="font-bold"
+          className="font-bold text-gray-300"
           onClick={toggleSidebar}
         >
           {open ? <X /> : <Menu />}
         </Button>
       </SidebarHeader>
-      <Separator />
+      <Separator className="bg-gray-300" />
       <SidebarContent>
         {items.map((item) => (
           <SidebarItem key={item.title}>
@@ -103,14 +101,6 @@ export function AppSidebar({ items }: { items: IRoutes[] }) {
           </SidebarItem>
         ))}
       </SidebarContent>
-      <Separator />
-      <SidebarFooter>
-        <Avatar className="rounded-xl">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>Usuario</AvatarFallback>
-        </Avatar>
-        {open && <span>Usuario</span>}
-      </SidebarFooter>
     </Sidebar>
   );
 }
