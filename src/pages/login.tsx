@@ -21,8 +21,14 @@ function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(email, senha);
-    navigate('/');
+    try {
+      await login(email, senha);
+      navigate('/');
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
   };
 
   return (

@@ -5,8 +5,6 @@ const usuarioDefaultValues: UsuarioSchemaType = {
   id: '',
   nome: '',
   email: '',
-  idade: 0,
-  sexo: 'M',
 };
 
 const CadastraUsuario = () => {

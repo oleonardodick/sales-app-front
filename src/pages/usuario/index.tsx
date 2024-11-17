@@ -18,7 +18,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { UsuarioSchemaType } from '@/schemas/usuario';
 import {
   CirclePlusIcon,
   FilePenLineIcon,
@@ -27,13 +26,17 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { dadosUsuarios } from './dadosUsuario';
+import IUsuario from '@/responses/IUsuario';
+import { buscaTodosUsuarios } from '@/services/usuario';
 
 function Usuarios() {
-  const [usuarios, setUsuarios] = useState<UsuarioSchemaType[]>([]);
+  const [usuarios, setUsuarios] = useState<IUsuario[]>([]);
 
   useEffect(() => {
-    setUsuarios(dadosUsuarios);
+    const carregaUsuarios = async () => {
+      setUsuarios(await buscaTodosUsuarios());
+    };
+    carregaUsuarios();
   }, []);
 
   return (
@@ -59,8 +62,8 @@ function Usuarios() {
           <AppTableRow>
             <AppTableHead>Nome</AppTableHead>
             <AppTableHead>E-mail</AppTableHead>
-            <AppTableHead>Idade</AppTableHead>
-            <AppTableHead>Sexo</AppTableHead>
+            <AppTableHead>Telefone</AppTableHead>
+            <AppTableHead>Ativo</AppTableHead>
             <AppTableHeadIcon />
             <AppTableHeadIcon />
           </AppTableRow>
@@ -70,10 +73,8 @@ function Usuarios() {
             <AppTableRow key={usuario.email}>
               <AppTableCell>{usuario.nome}</AppTableCell>
               <AppTableCell>{usuario.email}</AppTableCell>
-              <AppTableCell>{usuario.idade}</AppTableCell>
-              <AppTableCell>
-                {usuario.sexo === 'M' ? 'Masculino' : 'Feminino'}
-              </AppTableCell>
+              <AppTableCell>{usuario.telefone}</AppTableCell>
+              <AppTableCell>{usuario.ativo ? 'S' : 'N'}</AppTableCell>
               <AppTableCell tooltip={'Editar'}>
                 <Link to={`/usuarios/modificar/${usuario.id}`}>
                   <FilePenLineIcon />

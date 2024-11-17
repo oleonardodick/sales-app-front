@@ -1,9 +1,9 @@
-import { UsuarioSchemaType } from '@/schemas/usuario';
+import IUsuario from '@/responses/IUsuario';
 import { createContext } from 'react';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
-  loggedUser?: UsuarioSchemaType;
+  loggedUser?: IUsuario;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }

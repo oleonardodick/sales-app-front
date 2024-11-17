@@ -1,25 +1,23 @@
 import { useEffect, useState } from 'react';
 import { AuthContext } from './authContext';
-import { UsuarioSchemaType } from '@/schemas/usuario';
+import { executarLogin } from '../login.service';
+import IUsuario from '@/responses/IUsuario';
+import { buscaUsuarioPorEmail } from '@/services/usuario';
+import ILogin from '@/responses/ILogin';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [loggedUser, setLoggedUser] = useState<UsuarioSchemaType>();
+  const [loggedUser, setLoggedUser] = useState<IUsuario>();
 
   useEffect(() => {
     const carregaToken = async () => {
       const token = await localStorage.getItem('token');
-      if (token && !isAuthenticated) {
+      const email = await localStorage.getItem('email');
+      if (token && email && !isAuthenticated) {
         setIsAuthenticated(true);
-        setLoggedUser({
-          id: 'asd215as',
-          nome: 'Leonardo',
-          email: 'leonardo1@mail.com',
-          idade: 29,
-          sexo: 'M',
-        });
+        setLoggedUser(await buscaUsuarioPorEmail(email));
       }
     };
 
@@ -27,23 +25,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [isAuthenticated]);
 
   const login = async (email: string, password: string) => {
-    try {
-      //executar aqui o post para a API para o login
-      if (email === 'admin@mail.com' && password === 'admin') {
-        const token = 'tokenJWT';
-        localStorage.setItem('token', token);
-        setIsAuthenticated(true);
-        setLoggedUser({
-          id: 'asd215as',
-          nome: 'Leonardo',
-          email: 'leonardo1@mail.com',
-          idade: 29,
-          sexo: 'M',
-        });
-      }
-    } catch (error) {
-      console.log('Erro de login', error);
+    const loginResposta: ILogin = await executarLogin(email, password);
+    if (loginResposta.statusCode === 200) {
+      const token = loginResposta.token;
+      localStorage.setItem('token', token);
+      localStorage.setItem('email', email);
+      setIsAuthenticated(true);
+      setLoggedUser(await buscaUsuarioPorEmail(email));
+    } else {
       setIsAuthenticated(false);
+      throw new Error(loginResposta.message);
     }
   };
 
