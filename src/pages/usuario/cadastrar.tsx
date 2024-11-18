@@ -1,14 +1,7 @@
 import FormUsuario from '@/components/app/forms/usuario';
-import { UsuarioSchemaType } from '@/schemas/usuario';
-
-const usuarioDefaultValues: UsuarioSchemaType = {
-  id: '',
-  nome: '',
-  email: '',
-};
 
 const CadastraUsuario = () => {
-  return <FormUsuario usuario={usuarioDefaultValues} mode="c" />;
+  return <FormUsuario mode="c" />;
 };
 
 export default CadastraUsuario;
